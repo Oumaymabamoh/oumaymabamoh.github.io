@@ -3,18 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Post - Jane Doe</title>
+    <title>Decoding the Black Box: Can Neuro-Symbolic AI Solve the Limits of Post-Hoc XAI?</title>
     <style>
         body { font-family: sans-serif; max-width: 650px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #111827; }
         a { color: #d4a017; text-decoration: none; font-weight: bold; }
         a:hover { text-decoration: underline; }
+        h1 { font-size: 2em; margin-bottom: 5px; }
+        h2 { font-size: 1.4em; margin-top: 40px; border-bottom: 2px solid #eee; padding-bottom: 8px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 12px; }
+        .meta { color: #4b5563; font-size: 0.95em; }
     </style>
 </head>
 <body>
     <p><a href="../index.html#blog">&larr; Back to Blog</a></p>
-    <h1>From Attention to Logic</h1>
-    <p><em>Published on June 12, 2026</em></p>
+
+    <h1>Decoding the Black Box: Can Neuro-Symbolic AI Solve the Limits of Post-Hoc XAI?</h1>
+    <p class="meta"><em>Published on August 21, 2026</em></p>
+
     <hr style="margin: 20px 0; border:0; border-top:1px solid #eee;">
-    <p>Exploring the performance benefits and creative freedom of custom code. When you build from scratch, you remove bloat and achieve complete artistic control over your layouts.</p>
+
+    <p>When developers and researchers first dip their toes into Explainable AI (XAI), they almost immediately reach for the industry standards: <strong>LIME</strong> (Local Interpretable Model-agnostic Explanations) and <strong>SHAP</strong> (SHapley Additive exPlanations).</p>
+
+    <p>They are the go-to tools for opening up machine learning black boxes. Need to know why a model flagged a transaction or classified an image? Slap a SHAP or LIME explainer on it, generate some feature importance plots, and call it a day.</p>
+
+    <p>However, if you look closer, these post-hoc tools come with serious limitations. They don't actually tell you how a model thinks—they just guess at it after the fact. Lately, I’ve been deep-diving into a different question: <strong>What if, instead of trying to explain a black box <em>after</em> it’s trained, we built systems that are inherently transparent by design?</strong> This is an idea that first sparked during some great discussions with <strong>Prof. [Professor's Last Name]</strong>, and it’s a concept that feels more relevant than ever.</p>
+
+    <h2>The Illusion of Post-Hoc Explainability</h2>
+    <p>Deep neural networks are incredible at pattern recognition, but they are fundamentally black boxes. They don't reason; they correlate.</p>
+    <p>Because we can't look inside a massive neural network and understand its internal weights, we rely on post-hoc explainers. But this creates several hidden traps:</p>
+
+    <ul>
+        <li><strong>Approximation Errors:</strong> LIME and SHAP don't explain the actual model. They build a simpler, local model around the complex one to approximate its behavior. An approximation of an approximation is a risky foundation, especially in high-stakes environments.</li>
+        <li><strong>Instability:</strong> Small, seemingly insignificant tweaks to input data can completely flip a SHAP value or a LIME explanation. If an explanation changes because of a tiny noise perturbation, how much can we really trust it?</li>
+        <li><strong>Lack of True Reasoning:</strong> The underlying neural network still has no concept of logic. The explainer is just drawing lines around a black box's blind guesses.</li>
+    </ul>
+
+    <h2>Enter Neuro-Symbolic AI: Transparency by Design</h2>
+    <p>If post-hoc tools are just patching a broken paradigm, what is the alternative? This is where <strong>Neuro-Symbolic AI (NeSy)</strong> comes into play.</p>
+    <p>Neuro-Symbolic AI aims to bridge the long-standing gap between two historically separate camps of AI: connectionism (neural networks) and symbolism (logic and rules).</p>
+
+    <ul>
+        <li><strong>The Neural Component</strong> handles what humans struggle to code manually: perception, pattern matching, handling noisy data, and dealing with unstructured inputs like computer vision or audio.</li>
+        <li><strong>The Symbolic Component</strong> handles what neural networks struggle with: structured reasoning, logical rules, constraints, and knowledge graphs.</li>
+    </ul>
+
+    <p>By combining the two, explainability changes fundamentally. Instead of asking a black box for an excuse <em>after</em> it makes a prediction, a neuro-symbolic architecture can output a <strong>chain of logic</strong> or a set of symbolic rules that humans can actually read, audit, and understand. The explanation isn’t an afterthought; it is the computation itself.</p>
+
+    <h2>The Hard Truth: Why NeSy Isn't a Magic Bullet (The Drawbacks)</h2>
+    <p>While the theory behind Neuro-Symbolic AI is elegant, there is a reason the entire industry hasn't completely shifted over to it yet. Building these hybrid systems comes with major hurdles:</p>
+
+    <ul>
+        <li><strong>The Knowledge Acquisition Bottleneck:</strong> Traditional symbolic AI relies on manually defined rules and knowledge bases. As problems grow more complex, creating and maintaining an exhaustive set of symbolic rules requires intense manual effort from human experts.</li>
+        <li><strong>Integration and Differentiability Challenges:</strong> Marrying continuous, differentiable neural layers with discrete, rigid logic symbols is mathematically difficult. Translating back and forth between vector spaces and logical predicates can degrade performance or break gradient-based optimization (backpropagation).</li>
+        <li><strong>Scalability Issues:</strong> As the search space or the dataset grows, the number of logic rules and symbolic states can explode exponentially, making these systems computationally heavy and hard to scale to massive, open-world datasets.</li>
+    </ul>
+
+    <h2>Why This Paradigm Shift Still Matters</h2>
+    <p>Despite these challenges, the push toward NeSy is gaining momentum. As global AI regulations tighten and the demand for absolute algorithmic accountability grows, relying forever on "black box + local explainer" scripts will no longer suffice for high-stakes sectors like healthcare, law, and autonomous systems.</p>
+    <p>We need architectures that strive for intrinsic interpretability, even if the engineering path to get there is difficult.</p>
+
+    <h2>Final Thoughts</h2>
+    <p>Post-hoc tools like LIME and SHAP are useful training wheels, but they shouldn't be the final destination for explainable AI. Moving toward architectures that balance pattern recognition with logical reasoning is one of the most exciting frontiers in computer science.</p>
+    <p><em>Are you currently working with hybrid architectures or exploring NeSy in your projects? Do you think the engineering hurdles of symbolic logic are worth the payoff of intrinsic transparency? Let's connect and discuss!</em></p>
 </body>
 </html>
