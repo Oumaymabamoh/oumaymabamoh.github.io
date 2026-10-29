@@ -5,65 +5,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Decoding the Black Box: Can Neuro-Symbolic AI Solve the Limits of Post-Hoc XAI?</title>
     <style>
-        body { font-family: sans-serif; max-width: 650px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #111827; }
-        a { color: #d4a017; text-decoration: none; font-weight: bold; }
-        a:hover { text-decoration: underline; }
-        h1 { font-size: 2em; margin-bottom: 5px; }
-        h2 { font-size: 1.4em; margin-top: 40px; border-bottom: 2px solid #eee; padding-bottom: 8px; }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 12px; }
-        .meta { color: #4b5563; font-size: 0.95em; }
+        :root {
+            --bg-color: #fafbfc;
+            --text-main: #1f2328;
+            --text-muted: #57606a;
+            --accent: #d4a017; /* Golden Yellow */
+            --accent-hover: #b8860b;
+            --border-color: #d8dee4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 850px;
+            margin: 60px auto;
+            padding: 0 24px;
+            line-height: 1.75;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: var(--accent-hover);
+        }
+
+        h1 {
+            font-size: 2.2em;
+            font-weight: 500;
+            line-height: 1.25;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            color: #111418;
+        }
+
+        h2 {
+            font-size: 1.45em;
+            font-weight: 500;
+            margin-top: 50px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            letter-spacing: -0.01em;
+            color: #111418;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        ul {
+            padding-left: 24px;
+            margin-bottom: 24px;
+        }
+
+        li {
+            margin-bottom: 14px;
+            font-size: 1.02em;
+        }
+
+        strong {
+            color: #111418;
+        }
+
+        .meta {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+
+        .back-nav {
+            margin-bottom: 35px;
+        }
+
+        /* Modern Image Styling */
+        .blog-image-container {
+            margin: 35px 0;
+            text-align: center;
+        }
+
+        .blog-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .image-caption {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
-    <p><a href="../index.html#blog">&larr; Back to Blog</a></p>
+    <div class="back-nav">
+        <p><a href="../index.html#blog">&larr; Back </a></p>
+    </div>
 
     <h1>Decoding the Black Box: Can Neuro-Symbolic AI Solve the Limits of Post-Hoc XAI?</h1>
-    <p class="meta"><em>Published on August 21, 2026</em></p>
+    <p class="meta"><em>Published on September 29, 2026</em></p>
+<p>When I first started looking into Explainable AI (XAI), I did what everyone else does. I reached for the industry standards: <strong>LIME</strong> (Local Interpretable Model-agnostic Explanations) and <strong>SHAP</strong> (SHapley Additive exPlanations).</p>
 
-    <hr style="margin: 20px 0; border:0; border-top:1px solid #eee;">
+<p>Need to know why a model flagged a transaction or classified an image? Slap a SHAP or LIME explainer on it, generate some feature importance plots, and call it a day.</p>
 
-    <p>When developers and researchers first dip their toes into Explainable AI (XAI), they almost immediately reach for the industry standards: <strong>LIME</strong> (Local Interpretable Model-agnostic Explanations) and <strong>SHAP</strong> (SHapley Additive exPlanations).</p>
+<p>But the more I looked at them, the more they felt like an illusion. They don't actually tell you how a model thinks—they just guess at it <em>after</em> the fact.</p>
 
-    <p>They are the go-to tools for opening up machine learning black boxes. Need to know why a model flagged a transaction or classified an image? Slap a SHAP or LIME explainer on it, generate some feature importance plots, and call it a day.</p>
+<h2>The Illusion of Post-Hoc Explainability</h2>
+<p>Deep neural networks are incredible at pattern recognition, but they are fundamentally black boxes. They don't reason; they correlate.</p>
+<p>Because we can't look inside a massive neural network and understand its internal weights natively, we rely on post-hoc explainers. But this creates hidden traps that engineers rarely talk about:</p>
 
-    <p>However, if you look closer, these post-hoc tools come with serious limitations. They don't actually tell you how a model thinks—they just guess at it after the fact. Lately, I’ve been deep-diving into a different question: <strong>What if, instead of trying to explain a black box <em>after</em> it’s trained, we built systems that are inherently transparent by design?</strong> This is an idea that first sparked during some great discussions with <strong>Prof. [Professor's Last Name]</strong>, and it’s a concept that feels more relevant than ever.</p>
+<ul>
+    <li><strong>Approximation Errors:</strong> LIME and SHAP don't explain the actual model. They build a simpler, local model around the complex one to approximate its behavior. An approximation of an approximation is a shaky foundation, especially in high-stakes environments.</li>
+    <li><strong>Instability:</strong> Small, seemingly insignificant tweaks to input data can completely flip a SHAP value or a LIME explanation. If an explanation changes because of a tiny noise perturbation, how much can we really trust it?</li>
+    <li><strong>Lack of True Reasoning:</strong> The underlying neural network still has no concept of logic. The explainer is just drawing lines around a black box's blind guesses.</li>
+</ul>
 
-    <h2>The Illusion of Post-Hoc Explainability</h2>
-    <p>Deep neural networks are incredible at pattern recognition, but they are fundamentally black boxes. They don't reason; they correlate.</p>
-    <p>Because we can't look inside a massive neural network and understand its internal weights, we rely on post-hoc explainers. But this creates several hidden traps:</p>
+<h2>Chasing Intrinsic Transparency: My Dive Into Neuro-Symbolic AI</h2>
+<p>I wanted something better than guessing. I wanted to see if we could extract a transformer's attention weights directly and translate them into a logical explanation—a bridge into <strong>Neuro-Symbolic AI (NeSy)</strong>.</p>
+<p>The theory is intoxicating: marry <strong>connectionism</strong> (neural networks handling messy perception and pattern matching) with <strong>symbolism</strong> (logic rules and constraints).</p>
+<p>To be clear, <strong>this concept isn't entirely new</strong>. Enterprise research labs and tech giants—most notably <strong>IBM Research</strong> (with frameworks like Logical Neural Networks) and the MIT-IBM Watson AI Lab—have spent years pioneering neuro-symbolic integration, recognizing early on that pure neural scaling hits a hard wall in regulated, high-stakes environments.</p>
+<p>When I started coding my own lightweight version, I quickly learned a humbling lesson: you cannot cheat the system by injecting human-made dictionaries or stop-word filters to make the output look clean. If you use a human dictionary to tell the model what words mean, you aren't explaining the model—you're just hiding its true behavior behind your own bias.</p>
+<p>When you strip away human filters and force a model to speak for itself through raw mathematical attention vectors, you realize something wild: <strong>neural networks do not think like humans.</strong> They rank punctuation marks, helper verbs, and structural noise right alongside semantic anchors. True transparency means accepting that raw neural math is messy and alien, and translating that raw reality directly into automated logical assertions without tampering with what the model actually did.</p>
 
-    <ul>
-        <li><strong>Approximation Errors:</strong> LIME and SHAP don't explain the actual model. They build a simpler, local model around the complex one to approximate its behavior. An approximation of an approximation is a risky foundation, especially in high-stakes environments.</li>
-        <li><strong>Instability:</strong> Small, seemingly insignificant tweaks to input data can completely flip a SHAP value or a LIME explanation. If an explanation changes because of a tiny noise perturbation, how much can we really trust it?</li>
-        <li><strong>Lack of True Reasoning:</strong> The underlying neural network still has no concept of logic. The explainer is just drawing lines around a black box's blind guesses.</li>
-    </ul>
+<h2>Building a Quick Neuro-Symbolic Proof-of-Concept</h2>
+<p>To test this theory in code without falling back on human cheat codes, I built a lightweight pipeline using <strong>DistilBERT</strong> and a custom symbolic translation layer. Instead of guessing post-hoc, the code pulls the model's raw attention matrix, ranks the strongest structural tokens objectively, and compiles them into a formal logical assertion (a Horn clause).</p>
 
-    <h2>Enter Neuro-Symbolic AI: Transparency by Design</h2>
-    <p>If post-hoc tools are just patching a broken paradigm, what is the alternative? This is where <strong>Neuro-Symbolic AI (NeSy)</strong> comes into play.</p>
-    <p>Neuro-Symbolic AI aims to bridge the long-standing gap between two historically separate camps of AI: connectionism (neural networks) and symbolism (logic and rules).</p>
+<pre><code class="language-python">
+import torch
+from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 
-    <ul>
-        <li><strong>The Neural Component</strong> handles what humans struggle to code manually: perception, pattern matching, handling noisy data, and dealing with unstructured inputs like computer vision or audio.</li>
-        <li><strong>The Symbolic Component</strong> handles what neural networks struggle with: structured reasoning, logical rules, constraints, and knowledge graphs.</li>
-    </ul>
+# 1. Load fine-tuned sentiment model and attention outputs
+model_name = "distilbert-base-uncased-finetuned-sst-2-english"
+tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+model = DistilBertForSequenceClassification.from_pretrained(model_name, output_attentions=True)
+model.eval()
 
-    <p>By combining the two, explainability changes fundamentally. Instead of asking a black box for an excuse <em>after</em> it makes a prediction, a neuro-symbolic architecture can output a <strong>chain of logic</strong> or a set of symbolic rules that humans can actually read, audit, and understand. The explanation isn’t an afterthought; it is the computation itself.</p>
+# 2. Test Input Phrase
+text_input = "I am absolutely thrilled and overjoyed with how wonderfully this turned out!"
+inputs = tokenizer(text_input, return_tensors='pt')
 
-    <h2>The Hard Truth: Why NeSy Isn't a Magic Bullet (The Drawbacks)</h2>
-    <p>While the theory behind Neuro-Symbolic AI is elegant, there is a reason the entire industry hasn't completely shifted over to it yet. Building these hybrid systems comes with major hurdles:</p>
+with torch.no_grad():
+    outputs = model(**inputs)
 
-    <ul>
-        <li><strong>The Knowledge Acquisition Bottleneck:</strong> Traditional symbolic AI relies on manually defined rules and knowledge bases. As problems grow more complex, creating and maintaining an exhaustive set of symbolic rules requires intense manual effort from human experts.</li>
-        <li><strong>Integration and Differentiability Challenges:</strong> Marrying continuous, differentiable neural layers with discrete, rigid logic symbols is mathematically difficult. Translating back and forth between vector spaces and logical predicates can degrade performance or break gradient-based optimization (backpropagation).</li>
-        <li><strong>Scalability Issues:</strong> As the search space or the dataset grows, the number of logic rules and symbolic states can explode exponentially, making these systems computationally heavy and hard to scale to massive, open-world datasets.</li>
-    </ul>
+probs = torch.softmax(outputs.logits, dim=-1)
+pred_idx = torch.argmax(probs).item()
+predicted_label = "Positive" if pred_idx == 1 else "Negative"
 
-    <h2>Why This Paradigm Shift Still Matters</h2>
-    <p>Despite these challenges, the push toward NeSy is gaining momentum. As global AI regulations tighten and the demand for absolute algorithmic accountability grows, relying forever on "black box + local explainer" scripts will no longer suffice for high-stakes sectors like healthcare, law, and autonomous systems.</p>
-    <p>We need architectures that strive for intrinsic interpretability, even if the engineering path to get there is difficult.</p>
+# 3. Extract Raw Attention & Reconstruct Subwords
+last_layer_attention = outputs.attentions[-1]
+token_relevance = last_layer_attention.mean(dim=1)[0].mean(dim=0).detach().numpy()
+tokens = tokenizer.convert_ids_to_tokens(inputs['input_ids'][0])
 
-    <h2>Final Thoughts</h2>
-    <p>Post-hoc tools like LIME and SHAP are useful training wheels, but they shouldn't be the final destination for explainable AI. Moving toward architectures that balance pattern recognition with logical reasoning is one of the most exciting frontiers in computer science.</p>
+reconstructed_words = []
+current_word, current_scores = "", []
+for token, score in zip(tokens, token_relevance):
+    if token in ["[CLS]", "[SEP]"]: continue
+    if token.startswith("##"):
+        current_word += token[2:]
+        current_scores.append(score)
+    else:
+        if current_word: reconstructed_words.append((current_word, max(current_scores)))
+        current_word, current_scores = token, [score]
+if current_word: reconstructed_words.append((current_word, max(current_scores)))
+
+# 4. Purely Data-Driven Extraction (Zero Human Dictionaries)
+sorted_anchors = sorted(reconstructed_words, key=lambda x: x[1], reverse=True)
+top_features = [word for word, score in sorted_anchors[:3]]
+
+# 5. Automated Symbolic Logic Assertion (System 2 Rule Engine)
+symbolic_rule = {
+    "premises": [f"HasHighAttention({token})" for token in top_features],
+    "conclusion": f"Classification({predicted_label})"
+}
+
+print(f"Neural Classification: {predicted_label} (Confidence: {probs[0][pred_idx].item():.4f})")
+print(f"Generated Horn Clause: IF {' ∧ '.join(symbolic_rule['premises'])} THEN {symbolic_rule['conclusion']}")
+</code></pre>
+
+<p>When you run this script against a phrase like <em>"I am absolutely thrilled and overjoyed with how wonderfully this turned out!"</em>, you don't get a sugar-coated, human-friendly summary. Instead, the model's raw math exposes its internal state directly:</p>
+
+<pre><code class="language-text">
+Neural Classification: Positive (Confidence: 0.9998)
+Generated Horn Clause: IF HasHighAttention(turned) ∧ HasHighAttention(!) ∧ HasHighAttention(wonderfully) THEN Classification(Positive)
+</code></pre>
+
+<p>Notice what just happened: the model's attention mechanism prioritized an auxiliary verb (`turned`) and punctuation (`!`) right alongside a semantic anchor (`wonderfully`). It’s messy, it’s counterintuitive, and it’s completely unedited. That unfiltered honesty is what true transparent AI requires.</p>
+
+<h2>The Hard Truth: Why NeSy Is So Hard to Build</h2>
+<p>There is a reason the entire industry hasn't completely shifted to neuro-symbolic architectures yet. Building them exposes you to brutal engineering walls:</p>
+
+<ul>
+    <li><strong>The Knowledge Acquisition Bottleneck:</strong> Traditional symbolic AI relies on rigid rules. Building exhaustive rule bases manually is an engineering nightmare.</li>
+    <li><strong>The Differentiability Gap:</strong> Marrying continuous, differentiable vector spaces with discrete, rigid logic symbols is mathematically punishing. Translating back and forth can easily break optimization.</li>
+    <li><strong>Scalability Issues:</strong> As search spaces grow, logic rules explode exponentially, making these systems computationally heavy and tough to scale to massive, open-world datasets.</li>
+</ul>
+
+<h2>Why This Paradigm Shift Still Matters</h2>
+<p>Despite these hurdles, the push toward NeSy is where the real frontier of AI lies. As global AI regulations tighten and the demand for absolute algorithmic accountability grows, relying forever on "black box + local explainer" scripts won't cut it for sectors like healthcare, law, and critical infrastructure.</p>
+<p>We need architectures that strive for intrinsic interpretability, even if the engineering path to get there forces us to confront how messy the underlying math really is.</p>
+
+<h2>Final Thoughts</h2>
+<p>Post-hoc tools like LIME and SHAP are useful training wheels, but they shouldn't be the final destination. Wrestling with the tension between neural weights and symbolic logic is frustrating, but it is precisely where real engineering happens.</p>
+
+<hr>
+
+<h2>📚 Further Reading & Foundational Research</h2>
+<p>If you want to dive deeper into the science and move beyond toy scripts, check out these key contributions from the research community:</p>
+<ul>
+    <li><strong>Riegel et al., IBM Research (2020):</strong> <em>"Logical Neural Networks"</em> – Introducing a novel neuro-symbolic framework providing key properties of both neural learning and symbolic logic.</li>
+    <li><strong>Henry Kautz (2020):</strong> <em>"The Third AI Summer"</em> – AAAI Robert S. Engelmore Memorial Award Lecture, establishing a modern taxonomy for neuro-symbolic architectures.</li>
+    <li><strong>MIT-IBM Watson AI Lab:</strong> Foundational work on the Neuro-Symbolic Concept Learner (NS-CL), interpreting scenes, words, and sentences without manual rule supervision.</li>
+</ul>
 </body>
 </html>
+
+
+
